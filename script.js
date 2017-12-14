@@ -30,20 +30,122 @@ var movies = [
     image: 'https://www.sideshowtoy.com/photo_902663_thumb.jpg'
   }
 ];
-var moviesElements = movies.map(function(movie) {
+/*var moviesElements = movies.map(function(movie) {
   return React.createElement('li', {key: movie.id}, 
     React.createElement('h2', {}, movie.title),
     React.createElement('p', {}, movie.desc),
     React.createElement('img', {src: movie.image})  
   );
-});
+});*/
 
-var element =
+/*var element =
   React.createElement('div', {}, 
     React.createElement('h1', {}, 'Lista filmów'),
     React.createElement('ul', {}, moviesElements),
-  );
+  );*/
+
+var Movie = React.createClass({
+  propTypes: {
+    movie: React.PropTypes.object.isRequired
+  },
+  render: function() {
+    return (
+      React.createElement('li', {}, 
+        React.createElement(MovieTitle, {title: this.props.movie.title}),
+        React.createElement(MovieDescription, {desc: this.props.movie.desc}),
+        React.createElement(MovieImg, {image: this.props.movie.image})  
+      )
+    );
+  }
+});
+                          
+var MovieTitle = React.createClass ({
+  propTypes: {
+    title: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    return (
+      React.createElement('h2', {}, this.props.title)
+    );  
+  }
+});
+
+var MovieDescription = React.createClass ({
+  propTypes: {
+    desc: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    return (
+      React.createElement('p', {}, this.props.desc)
+    );
+  }
+});
+
+var MoviesList = React.createClass({
+  propTypes: {
+    moviesElements: React.PropTypes.array.isRequired
+  },
+  render: function() {
+    return (
+      React.createElement('div', {}, 
+        React.createElement('h1', {}, 'Lista filmów'),
+        React.createElement('ul', {}, 
+          this.props.moviesElements.map(function(movie) {
+            return React.createElement(Movie, {key: movie.id, movie: movie});
+          })                   
+        ))
+    );
+  }
+});
+
+var MovieImg = React.createClass({
+  propTypes: {
+    image: React.PropTypes.string.isRequired
+  },
+  render: function() {
+    return (
+      React.createElement('img', {src: this.props.image})
+    );
+  }
+});
 
 
 
+
+var element = React.createElement(MoviesList, {moviesElements: movies});
 ReactDOM.render(element, document.getElementById('app'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
